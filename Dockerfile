@@ -16,7 +16,11 @@ RUN chmod +x ./gradlew
 # 애플리케이션 빌드
 RUN ./gradlew clean build
 
-RUN mv build/libs/*.jar /app/app.jar
+RUN mv build/libs/*.jar /app.jar
+
+# 현재 폴더에서 app.jar 빼고 전부 제거
+RUN rm -rf *
+RUN mv /app.jar /app/app.jar
 
 # 실행할 JAR 파일 지정
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "/app/app.jar"]
